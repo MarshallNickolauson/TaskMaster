@@ -106,7 +106,7 @@ fn run(ctx: eframe::egui::Context, cmds: Receiver<Cmd>, out: Sender<Snapshot>) {
     loop {
         // sample
         let t0 = Instant::now();
-        let dt = t0.duration_since(last).as_secs_f32().max(0.05);
+        let dt = t0.duration_since(last).as_secs_f32().max(0.005);
         last = t0;
         sys.refresh_cpu_usage();
         sys.refresh_memory();

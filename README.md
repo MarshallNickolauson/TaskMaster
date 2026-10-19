@@ -41,7 +41,7 @@ A monitor should not be the thing that slows your machine down.
 - A dedicated sampler thread refreshes only what the table shows (CPU, memory, disk) and blocks on a channel between samples.
 - The UI repaints only when a new sample arrives or you interact. No animation loop.
 - **Eco mode**: slows sampling when another app has focus and stops it entirely when minimized or paused.
-- Refresh rate is yours to pick: 0.5, 1, 2 or 5 seconds.
+- Refresh rate is yours to pick: 0.01, 0.1, 0.5, 1, 2 or 5 seconds.
 - The status bar shows TaskMaster's own CPU, memory and per-sample cost, live.
 
 ## Using it

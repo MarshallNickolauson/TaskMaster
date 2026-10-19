@@ -472,7 +472,7 @@ impl eframe::App for App {
                         if cell(ui, if self.paused { "Resume" } else { "Pause" }, self.paused).clicked() {
                             self.paused = !self.paused;
                         }
-                        for (ms, n) in [(5000, "5s"), (2000, "2s"), (1000, "1s"), (500, "0.5s")] {
+                        for (ms, n) in [(5000, "5s"), (2000, "2s"), (1000, "1s"), (500, "0.5s"), (100, "0.1s"), (10, "0.01s")] {
                             if cell(ui, n, self.refresh_ms == ms).clicked() {
                                 self.refresh_ms = ms;
                             }
