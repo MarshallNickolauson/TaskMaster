@@ -1,6 +1,6 @@
 [package]
 name = "taskmaster"
-version = "0.1.0"
+version = "0.1.1"
 description = "A tiny, fast, live task manager: every process, CPU, memory, network and disk in real time."
 license = "MIT"
 repository = "https://github.com/MarshallNickolauson/TaskMaster"
