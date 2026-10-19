@@ -231,3 +231,9 @@ body { counter-reset: sec; }
 .ptable .bar { position: absolute; bottom: 2px; height: 2px; }
 .demo canvas { height: clamp(140px, 18vw, 200px); cursor: default; }
 .osrow { grid-template-columns: repeat(2, minmax(0,1fr)); }
+
+/* support button */
+.support-btn svg { color: #e5566d; }
+.nav-in > .support-btn { border-left: 1px solid var(--line); border-right: 0; }
+.nav-in > .gh-btn { border-left: 1px solid var(--line); }
+@media (max-width: 1040px) { .support-btn span { display: none; } .nav-in > .support-btn { padding: 0 14px; } }
