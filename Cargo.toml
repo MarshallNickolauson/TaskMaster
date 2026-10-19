@@ -1,0 +1,20 @@
+[package]
+name = "taskmaster"
+version = "0.1.0"
+description = "A tiny, fast, live task manager: every process, CPU, memory, network and disk in real time."
+license = "MIT"
+repository = "https://github.com/MarshallNickolauson/TaskMaster"
+rust-version = "1.85"
+edition = "2024"
+
+[dependencies]
+eframe = { version = "0.37.0", default-features = false, features = ["glow", "default_fonts", "x11", "wayland"] }
+image = { version = "0.25.10", default-features = false, features = ["png"] }
+sysinfo = { version = "0.39.6", default-features = false, features = ["network", "system"] }
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true

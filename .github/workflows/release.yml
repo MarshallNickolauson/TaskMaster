@@ -1,0 +1,44 @@
+name: Release
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - { os: macos-14, target: aarch64-apple-darwin, name: macos-arm64 }
+          - { os: macos-13, target: x86_64-apple-darwin, name: macos-intel }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with: { targets: "${{ matrix.target }}" }
+      - run: cargo build --release --target ${{ matrix.target }}
+      - name: Package (unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          mkdir dist
+          cp target/${{ matrix.target }}/release/taskmaster dist/
+          if [ "${{ runner.os }}" = "macOS" ]; then
+            APP=dist/TaskMaster.app/Contents
+            mkdir -p $APP/MacOS $APP/Resources
+            cp dist/taskmaster $APP/MacOS/TaskMaster
+            mkdir i.iconset
+            for n in 16 32 128 256 512; do sips -z $n $n assets/icon-512.png --out i.iconset/icon_${n}x${n}.png >/dev/null; done
+            cp i.iconset/icon_32x32.png i.iconset/icon_16x16@2x.png; cp i.iconset/icon_256x256.png i.iconset/icon_128x128@2x.png; cp assets/icon-512.png i.iconset/icon_256x256@2x.png
+            iconutil -c icns i.iconset -o $APP/Resources/icon.icns
+            printf '<?xml version="1.0" encoding="UTF-8"?><plist version="1.0"><dict><key>CFBundleName</key><string>TaskMaster</string><key>CFBundleExecutable</key><string>TaskMaster</string><key>CFBundleIdentifier</key><string>dev.mdnlabs.taskmaster</string><key>CFBundleIconFile</key><string>icon</string><key>CFBundlePackageType</key><string>APPL</string><key>NSHighResolutionCapable</key><true/></dict></plist>' > $APP/Info.plist
+            hdiutil create -volname TaskMaster -srcfolder dist/TaskMaster.app -ov -format UDZO taskmaster-${{ matrix.name }}.dmg
+          else
+            tar -czf taskmaster-${{ matrix.name }}.tar.gz -C dist taskmaster
+          fi
+      - uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            taskmaster-*.dmg

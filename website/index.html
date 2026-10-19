@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TaskMaster | Every process. Live.</title>
+<meta name="description" content="TaskMaster is a tiny, fast, live task manager for macOS: every process, CPU, memory, network and disk in real time, in about 4 MB of Rust and egui.">
+<meta property="og:title" content="TaskMaster | Every process. Live."><meta property="og:description" content="TaskMaster is a tiny, fast, live task manager for macOS: every process, CPU, memory, network and disk in real time, in about 4 MB of Rust and egui."><meta property="og:image" content="https://taskmaster.mdnlabs.dev/img/app.jpg">
+<meta name="theme-color" content="#090c12">
+<link rel="icon" href="/favicon.png">
+<link rel="stylesheet" href="/style.css">
+<script src="/theme.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="nav-in">
+  <a class="back mono" href="https://mdnlabs.dev" aria-label="Back to mdnlabs.dev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>mdnlabs</a>
+  <a class="brand" href="/"><img src="/img/icon.png" alt="" width="26" height="26"><span>TaskMaster</span></a>
+  <nav class="nav-links mono" aria-label="Main"><a href="/#try">Try it</a><a href="/#features">Features</a><a href="/download">Download</a></nav>
+  <span class="nav-sp"></span>
+  <a class="gh-btn hide-t" href="https://github.com/MarshallNickolauson/TaskMaster" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.93-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.72 1.22 1.88.87 2.34.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.96 0-.87.31-1.59.83-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.52.56.83 1.28.83 2.15 0 3.08-1.87 3.76-3.66 3.96.29.25.54.74.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>GitHub<span class="stars" data-stars hidden><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 18.1 5.6 21.6 7 14.5 1.7 9.5l7.2-.9z"/></svg><span></span></span></a>
+  <a class="btn btn-nav" href="/download">Download</a>
+  <button class="theme-btn" type="button" aria-label="Toggle light and dark mode"><svg class="i-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg><svg class="i-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<main id="main">
+
+<section class="hero"><div class="hero-bg" aria-hidden="true"><i></i><i></i><i></i></div><div class="wrap">
+  <h1>Every process. Live.</h1>
+  <p class="sub">TaskMaster is a task manager that updates in real time and still idles near zero. Sort, search, group, inspect and end any process, with CPU, memory, network and disk history one click away.</p>
+  <div class="cta"><a class="btn" href="/download"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4.500-4.500M12 15l4.500-4.500M4 20h16"/></svg><span>Download</span></a><a class="btn btn-quiet" href="#try">Try the demo</a></div>
+  <div class="install"><code class="mono">curl -fsSL https://taskmaster.mdnlabs.dev/install.sh | bash</code><button type="button" class="copy" data-copy="curl -fsSL https://taskmaster.mdnlabs.dev/install.sh | bash">Copy</button></div>
+  <p class="trust">macOS now, Windows next. MIT license. No account, no telemetry, nothing uploaded.</p>
+  <div class="frame"><div class="bar"><i></i><i></i><i></i><span class="mono">TaskMaster</span></div><img src="/img/app.jpg" width="2480" height="1560" alt="TaskMaster showing live CPU, memory, swap, network and disk charts above a sortable process table"></div>
+</div></section>
+
+<section class="sec" id="try"><div class="wrap">
+  <h2>Try it live.</h2>
+  <p class="lede">A simulated machine, updating every second the way the app does. Click a column to sort, type to filter, click a row to select it.</p>
+  <div class="demo">
+    <div class="demo-bar mono"><span>CPU <b id="dcpu">0%</b></span><span>Memory <b id="dmem">0%</b></span><span style="flex:1"></span><input id="dq" class="dq" placeholder="Search processes" aria-label="Search processes"></div>
+    <canvas id="map" aria-label="Live CPU chart"></canvas>
+    <div class="ptable mono" id="ptable"></div>
+  </div>
+</div></section>
+
+<section class="sec" id="how"><div class="wrap">
+  <h2>Just 3 steps.</h2>
+  <ol class="flow">
+    <li class="step"><h3>Open</h3><p>Launch it. Every process is already there, updating once a second.</p></li>
+    <li class="step"><h3>Spot</h3><p>Heat bars light up what burns CPU or memory. Sort, search or group by app.</p></li>
+    <li class="step"><h3>End</h3><p>Select a runaway process, check its history and path, and end it.</p></li>
+  </ol>
+</div></section>
+
+<section id="features"><div class="wrap rows">
+  <div class="row"><div class="row-text"><h2>Real time, not real heavy</h2><p>A background sampler refreshes only what the table shows. It slows down when another app has focus and stops completely when you minimize or pause, so watching your Mac never slows it down. The status bar shows TaskMaster's own CPU and memory, live.</p></div>
+    <div class="frame" style="margin:0"><img src="/img/app.jpg" width="2480" height="1560" alt="The process table" loading="lazy"></div></div>
+  <div class="row flip"><div class="row-text"><h2>Small on purpose</h2><p>One native binary of a few megabytes. No web view, no runtime, no helper daemon. Pure Rust with egui, so it starts instantly.</p></div>
+    <div class="chips"><div class="chip"><i style="background:#22d3ee"></i><b>~4 MB</b><span>release binary</span></div><div class="chip"><i style="background:#2dd4a0"></i><b>100% Rust</b><span>no web view</span></div><div class="chip"><i style="background:#fbbf24"></i><b>1 second</b><span>default refresh, adjustable</span></div><div class="chip"><i style="background:#f43f5e"></i><b>0% asleep</b><span>stops when hidden</span></div></div></div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+  <h2>What is inside</h2>
+  <dl class="deflist">
+    <div><dt>Live process table</dt><dd>PID, CPU, memory, disk read and write, and uptime, sortable and searchable.</dd></div>
+    <div><dt>Flat, grouped, tree</dt><dd>Collapse helper processes into their app, or follow the parent and child tree.</dd></div>
+    <div><dt>Performance charts</dt><dd>Two minutes of CPU, per-core load, memory, network and disk history.</dd></div>
+    <div><dt>Process inspector</dt><dd>Per-process CPU and memory history, parent, path and full command line.</dd></div>
+    <div><dt>End or force quit</dt><dd>Ask first, then terminate or force quit. Right-click for more, Delete for speed.</dd></div>
+    <div><dt>Adaptive refresh</dt><dd>Pick 0.5 to 5 seconds. Eco mode throttles in the background and pauses when minimized.</dd></div>
+  </dl>
+</div></section>
+
+<section class="closer"><div class="wrap"><h2>Know what your Mac is doing. Right now.</h2><p>Free and open source. Download it and watch every process live.</p>
+<div class="cta"><a class="btn" href="/download"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4.500-4.500M12 15l4.500-4.500M4 20h16"/></svg><span>Download</span></a><a class="btn btn-quiet" href="https://github.com/MarshallNickolauson/TaskMaster" target="_blank" rel="noopener noreferrer">View on GitHub<span class="stars" data-stars hidden><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 18.1 5.6 21.6 7 14.5 1.7 9.5l7.2-.9z"/></svg><span></span></span></a></div></div></section>
+
+</main>
+<footer class="footer">
+  <div class="foot-top">
+    <div class="foot-brand"><a class="brand" href="/"><img src="/img/icon.png" alt="" width="24" height="24"><span>TaskMaster</span></a>
+    <p>A tiny, free, open-source live task manager for macOS. Written in Rust.</p></div>
+    <nav class="foot-cols mono" aria-label="Footer">
+      <div><h4>Product</h4><a href="/#try">Try it</a><a href="/#features">Features</a><a href="/download">Download</a></div>
+      <div><h4>Project</h4><a href="https://github.com/MarshallNickolauson/TaskMaster" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://github.com/MarshallNickolauson/TaskMaster/releases" target="_blank" rel="noopener noreferrer">Releases</a><a href="https://github.com/MarshallNickolauson/TaskMaster/issues" target="_blank" rel="noopener noreferrer">Report an issue</a></div>
+      <div><h4>Legal</h4><a href="/privacy">Privacy</a><a href="https://github.com/MarshallNickolauson/TaskMaster/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">License (MIT)</a></div>
+    </nav>
+  </div>
+  <div class="foot-base mono"><span>© 2026 Marshall Nickolauson · MIT license</span><span>Independent project, not affiliated with Apple or any other product.</span></div>
+</footer>
+<div class="tip" id="tip"></div>
+<script src="/main.js" defer></script>
+
+</body></html>

@@ -1,0 +1,11 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  check:
+    strategy:
+      matrix: { os: [macos-14] }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo build --release
