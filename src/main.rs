@@ -445,7 +445,7 @@ impl eframe::App for App {
                             }
                         }
                         ui.add_space(10.0);
-                        let w = (ui.available_width() - 380.0).clamp(120.0, 340.0);
+                        let w = (ui.available_width() - 600.0).clamp(100.0, 340.0);
                         let r = ui.add_sized(
                             [w, 26.0],
                             egui::TextEdit::singleline(&mut self.query).id(search_id).hint_text("Search name or PID  (Ctrl/Cmd+F)").align(Align2::LEFT_CENTER),
@@ -582,7 +582,7 @@ impl App {
         let mem_pct = s.mem_used as f32 * 100.0 / s.mem_total.max(1) as f32;
         let cells: [(&str, String, String, Vec<(&VecDeque<f32>, Color32)>, Option<f32>); 5] = [
             ("CPU", format!("{:.0}%", s.cpu_total), format!("{} cores", s.cores.len()), vec![(&h.cpu, heat(s.cpu_total / 100.0))], Some(100.0)),
-            ("Memory", format!("{:.0}%", mem_pct), format!("{} of {}", fmt_bytes(s.mem_used), fmt_bytes(s.mem_total)), vec![(&h.mem, heat(mem_pct / 100.0))], Some(100.0)),
+            ("Memory", format!("{:.0}%", mem_pct), format!("Apps {} · System {}", fmt_bytes(s.mem_apps.min(s.mem_used)), fmt_bytes(s.mem_used.saturating_sub(s.mem_apps))), vec![(&h.mem, heat(mem_pct / 100.0))], Some(100.0)),
             ("Swap", fmt_bytes(s.swap_used), format!("of {}", fmt_bytes(s.swap_total)), vec![(&h.swap, VIOLET)], Some(100.0)),
             ("Network", format!("In {}", fmt_rate(s.net_rx)), format!("Out {}", fmt_rate(s.net_tx)), vec![(&h.rx, CYAN), (&h.tx, AMBER)], None),
             ("Disk", format!("R {}", fmt_rate(s.disk_read)), format!("W {}", fmt_rate(s.disk_write)), vec![(&h.dr, ACCENT), (&h.dw, RED)], None),
@@ -902,7 +902,7 @@ impl App {
                 graph(ui, vec2(tw, 190.0), "Network", &format!("In {}  Out {}", fmt_rate(s.net_rx), fmt_rate(s.net_tx)), &[(&h.rx, CYAN), (&h.tx, AMBER)], None, &|v| fmt_rate(v));
                 graph(ui, vec2(tw, 190.0), "Disk I/O", &format!("R {}  W {}", fmt_rate(s.disk_read), fmt_rate(s.disk_write)), &[(&h.dr, ACCENT), (&h.dw, RED)], None, &|v| fmt_rate(v));
             });
-            ui.label(RichText::new(format!("Swap {} of {}  ·  history covers the last {} samples", fmt_bytes(s.swap_used), fmt_bytes(s.swap_total), HISTORY)).monospace().size(11.0).color(FAINT));
+            ui.label(RichText::new(format!("Apps {} · System (kernel, wired, compressed) {}  ·  Swap {} of {}  ·  history covers the last {} samples", fmt_bytes(s.mem_apps.min(s.mem_used)), fmt_bytes(s.mem_used.saturating_sub(s.mem_apps)), fmt_bytes(s.swap_used), fmt_bytes(s.swap_total), HISTORY)).monospace().size(11.0).color(FAINT));
         });
     }
 }

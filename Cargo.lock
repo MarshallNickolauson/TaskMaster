@@ -2119,10 +2119,11 @@ dependencies = [
 
 [[package]]
 name = "taskmaster"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "eframe",
  "image",
+ "libc",
  "sysinfo",
 ]
 

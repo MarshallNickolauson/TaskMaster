@@ -21,6 +21,19 @@ pub struct Proc {
     pub age: u64,
 }
 
+/// Physical memory footprint (what Activity Monitor reports: includes compressed pages).
+/// Falls back to `None` when the OS refuses (other users' processes) or off macOS.
+#[cfg(target_os = "macos")]
+fn footprint(pid: u32) -> Option<u64> {
+    let mut ru: libc::rusage_info_v2 = unsafe { std::mem::zeroed() };
+    let r = unsafe { libc::proc_pid_rusage(pid as i32, libc::RUSAGE_INFO_V2, &mut ru as *mut _ as *mut libc::rusage_info_t) };
+    (r == 0 && ru.ri_phys_footprint > 0).then_some(ru.ri_phys_footprint)
+}
+#[cfg(not(target_os = "macos"))]
+fn footprint(_pid: u32) -> Option<u64> {
+    None
+}
+
 #[derive(Default)]
 pub struct Detail {
     pub pid: u32,
@@ -35,6 +48,8 @@ pub struct Snapshot {
     pub cpu_total: f32,
     pub cores: Vec<f32>,
     pub mem_used: u64,
+    /// Sum of per-process footprints; `mem_used` minus this is kernel, wired and compressed memory.
+    pub mem_apps: u64,
     pub mem_total: u64,
     pub swap_used: u64,
     pub swap_total: u64,
@@ -126,8 +141,11 @@ fn run(ctx: eframe::egui::Context, cmds: Receiver<Cmd>, out: Sender<Snapshot>) {
         }
 
         let (mut dr, mut dw) = (0.0f32, 0.0f32);
+        let mut apps = 0u64;
         let mut procs = Vec::with_capacity(sys.processes().len());
         for (pid, p) in sys.processes() {
+            let mem = footprint(pid.as_u32()).unwrap_or_else(|| p.memory());
+            apps += mem;
             let du = p.disk_usage();
             let (r, w) = (du.read_bytes as f32 / dt, du.written_bytes as f32 / dt);
             dr += r;
@@ -137,7 +155,7 @@ fn run(ctx: eframe::egui::Context, cmds: Receiver<Cmd>, out: Sender<Snapshot>) {
                 ppid: p.parent().map(|x| x.as_u32()).unwrap_or(0),
                 name: p.name().to_string_lossy().into_owned(),
                 cpu: p.cpu_usage(),
-                mem: p.memory(),
+                mem: mem,
                 read: r,
                 write: w,
                 status: status_name(p.status()),
@@ -160,6 +178,7 @@ fn run(ctx: eframe::egui::Context, cmds: Receiver<Cmd>, out: Sender<Snapshot>) {
             cpu_total: sys.global_cpu_usage(),
             cores: sys.cpus().iter().map(|c| c.cpu_usage()).collect(),
             mem_used: sys.used_memory(),
+            mem_apps: apps,
             mem_total: sys.total_memory(),
             swap_used: sys.used_swap(),
             swap_total: sys.total_swap(),

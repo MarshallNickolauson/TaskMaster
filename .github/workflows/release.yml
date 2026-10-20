@@ -11,7 +11,7 @@ jobs:
       matrix:
         include:
           - { os: macos-14, target: aarch64-apple-darwin, name: macos-arm64 }
-          - { os: macos-13, target: x86_64-apple-darwin, name: macos-intel }
+          - { os: macos-14, target: x86_64-apple-darwin, name: macos-intel }
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4

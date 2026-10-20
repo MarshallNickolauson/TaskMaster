@@ -1,6 +1,6 @@
 [package]
 name = "taskmaster"
-version = "0.1.1"
+version = "0.1.2"
 description = "A tiny, fast, live task manager: every process, CPU, memory, network and disk in real time."
 license = "MIT"
 repository = "https://github.com/MarshallNickolauson/TaskMaster"
@@ -18,3 +18,6 @@ lto = "fat"
 codegen-units = 1
 panic = "abort"
 strip = true
+
+[target.'cfg(target_os = "macos")'.dependencies]
+libc = "0.2.191"

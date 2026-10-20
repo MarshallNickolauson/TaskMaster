@@ -29,7 +29,8 @@
 
 - **Live process table**: PID, CPU, memory, disk read/write and uptime, sortable and searchable, with heat bars that show what is burning resources.
 - **Flat, Grouped or Tree**: collapse helper processes into their app, or follow the parent/child tree.
-- **Summary strip**: CPU, memory, swap, network and disk with sparklines, always visible.
+- **Summary strip**: CPU, memory, swap, network and disk with sparklines, always visible. Memory is split into apps and system (kernel, wired, compressed) so the total adds up.
+- **Activity Monitor-accurate memory**: per-process memory is the physical footprint on macOS, which includes compressed pages (falls back to resident size when the OS refuses).
 - **Performance tab**: two minutes of history for CPU, per-core load, memory, network and disk.
 - **Process inspector**: per-process CPU and memory history, parent (click to jump), path and full command line.
 - **End task / Force quit**, always with a confirmation.
